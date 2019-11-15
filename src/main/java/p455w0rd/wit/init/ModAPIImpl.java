@@ -1,11 +1,13 @@
 /*
- * This file is part of Wireless Interface Terminal. Copyright (c) 2017, p455w0rd
+ * This file is part of Wireless Interface Terminal. Copyright (c) 2017,
+ * p455w0rd
  * (aka TheRealp455w0rd), All rights reserved unless otherwise stated.
  *
  * Wireless Interface Terminal is free software: you can redistribute it and/or
  * modify it under the terms of the MIT License.
  *
- * Wireless Interface Terminal is distributed in the hope that it will be useful,
+ * Wireless Interface Terminal is distributed in the hope that it will be
+ * useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the MIT License for
  * more details.
@@ -22,7 +24,6 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.LoaderState;
 import net.minecraftforge.fml.relauncher.Side;
-import p455w0rd.ae2wtlib.api.ICustomWirelessTerminalItem;
 import p455w0rd.ae2wtlib.api.WTApi;
 import p455w0rd.wit.WIT;
 import p455w0rd.wit.api.IWirelessInterfaceTerminalItem;
@@ -59,23 +60,13 @@ public class ModAPIImpl extends WITApi {
 
 	@Override
 	public void openWITGui(final EntityPlayer player, final boolean isBauble, final int witSlot) {
-		if ((player == null) || (player instanceof FakePlayer) || (player instanceof EntityPlayerMP) || FMLCommonHandler.instance().getSide() == Side.SERVER) {
+		if (player == null || player instanceof FakePlayer || player instanceof EntityPlayerMP || FMLCommonHandler.instance().getSide() == Side.SERVER) {
 			return;
 		}
-		ItemStack is = isBauble ? WTApi.instance().getBaublesUtility().getWTBySlot(player, witSlot, IWirelessInterfaceTerminalItem.class) : WITUtils.getWITBySlot(player, witSlot);
-		if (!is.isEmpty() && isTerminalLinked(is)) {
+		final ItemStack is = isBauble ? WTApi.instance().getBaublesUtility().getWTBySlot(player, witSlot, IWirelessInterfaceTerminalItem.class) : WITUtils.getWITBySlot(player, witSlot);
+		if (!is.isEmpty() && WTApi.instance().isTerminalLinked(is)) {
 			ModNetworking.instance().sendToServer(new PacketOpenGui(ModGuiHandler.GUI_WIT, isBauble, witSlot));
 		}
-	}
-
-	@Override
-	public boolean isTerminalLinked(final ItemStack wirelessTerminalItemstack) {
-		String sourceKey = "";
-		if (wirelessTerminalItemstack.getItem() instanceof ICustomWirelessTerminalItem && wirelessTerminalItemstack.hasTagCompound()) {
-			sourceKey = ((ICustomWirelessTerminalItem) wirelessTerminalItemstack.getItem()).getEncryptionKey(wirelessTerminalItemstack);
-			return (sourceKey != null) && (!sourceKey.isEmpty());
-		}
-		return false;
 	}
 
 }

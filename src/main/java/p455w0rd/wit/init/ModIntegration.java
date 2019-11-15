@@ -26,8 +26,7 @@ import p455w0rd.ae2wtlib.api.WTApi;
 public class ModIntegration {
 
 	public static void preInit() {
-		WTApi.instance().getWirelessTerminalRegistry().registerWirelessTerminal(ModItems.WIT);
-		WTApi.instance().getWirelessTerminalRegistry().registerWirelessTerminal(ModItems.CREATIVE_WIT);
+		WTApi.instance().getWirelessTerminalRegistry().registerWirelessTerminal(ModItems.WIT, ModItems.CREATIVE_WIT);
 	}
 
 }
