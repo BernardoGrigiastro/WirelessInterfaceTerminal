@@ -40,6 +40,7 @@ import p455w0rd.wit.sync.packets.PacketInventoryAction;
 public class GuiWIT extends GuiWT {
 
 	private static final int LINES_ON_PAGE = 5;
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(ModGlobals.MODID, "textures/gui/interfaceterminal.png");
 
 	// TODO: copied from GuiMEMonitorable. It looks not changed, maybe unneeded?
 	private final int offsetX = 9;
@@ -131,7 +132,7 @@ public class GuiWIT extends GuiWT {
 
 	@Override
 	public void drawBG(final int offsetX, final int offsetY, final int mouseX, final int mouseY) {
-		mc.getTextureManager().bindTexture(new ResourceLocation(ModGlobals.MODID, "textures/gui/interfaceterminal.png"));
+		mc.getTextureManager().bindTexture(BACKGROUND);
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
 		int offset = 17;
